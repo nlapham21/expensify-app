@@ -1,18 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
-
-const config = {
-    apiKey: 'AIzaSyCj19gJnxwnkA4IzKiVksI4Ki6sSH6fso4',
-    authDomain: 'expensify-14c21.firebaseapp.com',
-    databaseURL: 'https://expensify-14c21.firebaseio.com',
-    projectId: 'expensify-14c21',
-    storageBucket: 'expensify-14c21.appspot.com',
-    messagingSenderId: '523565359945',
-};
-
-firebase.initializeApp(config);
-
-const database = firebase.database();
 
 // child_removed
 database.ref('expenses')
