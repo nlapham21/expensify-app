@@ -16,7 +16,7 @@ export const ExpensesSummary = ({ expensesCount, expensesTotal }) => {
     );
 };
 
-const mapStateToProps = (state) => { // eslint-disable-line
+const mapStateToProps = (state) => {
     const visibleExpenses = selectExpenses(state.expenses, state.filters);
     return {
         expensesCount: visibleExpenses.length,
