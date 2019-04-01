@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 
 import database from '../../firebase/firebase';
 import {
-    startAddExpense, addExpense, editExpense, removeExpense,
-    startRemoveExpense, setExpenses, startSetExpenses,
+    startAddExpense, addExpense, editExpense, startEditExpense, 
+    removeExpense, startRemoveExpense, setExpenses, startSetExpenses,
 } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 
@@ -26,7 +26,7 @@ test('should setup remove expense action object', () => {
     });
 });
 
-test('should remove expenses from firebase', (done) => {
+test('should remove expense from firebase', (done) => {
     const store = createMockStore({});
     const { id } = expenses[0];
     store.dispatch(startRemoveExpense({ id })).then(() => {
@@ -50,6 +50,24 @@ test('should setup edit expense action object', () => {
         updates: {
             note: 'nolan is a good coder',
         },
+    });
+});
+
+test('should edit expense from firebase', (done) => {
+    const store = createMockStore({});
+    const { id } = expenses[0];
+    const updates = { description: 'lunch' };
+    store.dispatch(startEditExpense(id, updates)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'EDIT_EXPENSE',
+            id,
+            updates,
+        });
+        return database.ref(`expenses/${actions[0].id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val().description).toEqual(updates.description);
+        done();
     });
 });
 
